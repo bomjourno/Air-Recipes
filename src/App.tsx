@@ -1,13 +1,16 @@
 import React from 'react'
-import logo from './logo.svg'
-import './App.scss'
 import { Header } from './components/Header/Header'
+import { ThemeProvider } from '@mui/material/styles'
+import { theme } from './utils/theme'
+import '@fontsource/roboto/400.css'
 
 function App() {
   return (
-    <div className='App'>
-      <Header />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className='page'>
+        <Header />
+      </div>
+    </ThemeProvider>
   )
 }
 
