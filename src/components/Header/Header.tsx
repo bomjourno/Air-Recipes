@@ -6,26 +6,43 @@ import {
   IconButton,
   InputAdornment,
   Paper,
+  Box,
 } from '@mui/material'
+import { motion, useTransform, useViewportScroll } from 'framer-motion'
 import { FilterList, Search, CancelRounded } from '@mui/icons-material'
-import Image from '../../images/header__image.png'
+import { useStyles } from './styles'
 
 export const Header = () => {
   const [value, setValue] = useState<string>('')
+  const classes = useStyles()
+
+  const offsetY = [0, 300]
+  const topSizes = [0, -160]
+  const heightSizes = [600, 352]
+  const heightImageSizes = [735, 450]
+  const { scrollY } = useViewportScroll()
+  const top = useTransform(scrollY, offsetY, topSizes)
+  const height = useTransform(scrollY, offsetY, heightSizes)
+  const heightImage = useTransform(scrollY, offsetY, heightImageSizes)
 
   return (
-    <Container sx={{ mt: '128px' }}>
+    <Container
+      className={classes.header}
+      style={{ height: height as any }}
+      component={motion.header}
+      disableGutters={true}
+    >
       <Typography variant='h1'>Air Recipes</Typography>
       <Typography variant='subtitle1'>Best Recipes for Best People</Typography>
-
-      <Container
-        className='header__input'
-        disableGutters={true}
-        sx={{ mt: '32px' }}
-      >
+      <Container className={classes.searchbar} disableGutters={true}>
         <TextField
+          className={classes.input}
+          id='outlined-basic'
+          variant='outlined'
+          placeholder='Search'
           value={value}
           onChange={(e) => setValue(e.target.value)}
+          type='text'
           InputProps={{
             startAdornment: (
               <InputAdornment position='start'>
@@ -35,66 +52,27 @@ export const Header = () => {
             endAdornment: value && (
               <IconButton onClick={() => setValue('')}>
                 <CancelRounded
+                  className={classes.cancelIcon}
                   color='secondary'
-                  sx={{ width: 15, height: 15 }}
                 />
               </IconButton>
             ),
           }}
-          id='outlined-basic'
-          variant='outlined'
-          placeholder='Search'
-          type='text'
-          sx={{
-            '& .MuiOutlinedInput-root.Mui-focused': {
-              '& > fieldset': {
-                borderWidth: '1px',
-              },
-            },
-            '& .MuiOutlinedInput-root:hover': {
-              '& > fieldset': {
-                borderColor: '#a9a9a9',
-              },
-            },
-            '& .MuiOutlinedInput-root': {
-              fieldset: {
-                borderRadius: '28px',
-              },
-            },
-            '.MuiOutlinedInput-root': {
-              pl: '19px',
-              pr: '12.5px',
-            },
-            width: '276px',
-          }}
         />
 
         <IconButton
-          className='header__button'
+          className={classes.filterIconWrap}
           size='large'
-          aria-label='filter_list'
           color='primary'
-          sx={{
-            width: '56px',
-            height: '56px',
-            ml: '16px',
-            borderWidth: '1px',
-            borderStyle: 'solid',
-          }}
+          aria-label='filter_list'
         >
-          <FilterList sx={{ color: 'black' }} />
+          <FilterList className={classes.filterIcon} />
         </IconButton>
       </Container>
-      <Paper
-        sx={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          width: '814px',
-          height: '735px',
-          backgroundImage: `url(${Image})`,
-          backgroundSize: 'cover',
-        }}
+      <Box
+        className={classes.mainImage}
+        style={{ top: top as any, height: heightImage as any }}
+        component={motion.div}
       />
     </Container>
   )
