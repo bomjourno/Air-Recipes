@@ -13,6 +13,8 @@ import {
 import { useStyles } from './styles'
 import { Close } from '@mui/icons-material'
 import { motion } from 'framer-motion'
+import { useAppDispatch } from '../../hooks/useAppDispatch'
+import { filterSlice } from '../../store/reducers/FilterSlice'
 
 interface PopupProps {
   modalIsOpened: boolean
@@ -24,24 +26,23 @@ interface PopupProps {
 export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
   const classes = useStyles()
 
+  const dispatch = useAppDispatch()
+  const { updateFilters } = filterSlice.actions
+  const [isShownClearBtn, setIsShownClearBtn] = useState<boolean>(false)
+
   const MAX_VALUE_SLIDER = 1200
   const MIN_VALUE_SLIDER = 100
 
-  const [isShownClearBtn, setIsShownClearBtn] = useState<boolean>(false)
-  const [checkboxes, setCheckboxes] = useState({
-    caribbean: true,
-    greek: true,
-    french: true,
-    indian: true,
-    chinese: true,
+  const [filters, setFilters] = useState({
+    Caribbean: true,
+    Greek: true,
+    French: true,
+    Indian: true,
+    Chinese: true,
+    calories: [MIN_VALUE_SLIDER, MAX_VALUE_SLIDER],
   })
 
-  const { caribbean, greek, french, indian, chinese } = checkboxes
-
-  const [valueSlider, setValueSlider] = useState<number[]>([
-    MIN_VALUE_SLIDER,
-    MAX_VALUE_SLIDER,
-  ])
+  const { Caribbean, Greek, French, Indian, Chinese } = filters
 
   const valuetext = (value: number) => {
     return `${value}`
@@ -50,40 +51,40 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
   const handleChangeCheckBoxes = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setCheckboxes({
-      ...checkboxes,
+    setFilters({
+      ...filters,
       [event.target.name]: event.target.checked,
     })
   }
 
   const handleChangeSlider = (event: Event, newValue: number | number[]) => {
-    setValueSlider(newValue as number[])
+    setFilters({ ...filters, calories: newValue as number[] })
   }
 
   const handleDefaultFilter = () => {
-    setValueSlider([MIN_VALUE_SLIDER, MAX_VALUE_SLIDER])
-    setCheckboxes({
-      caribbean: true,
-      greek: true,
-      french: true,
-      indian: true,
-      chinese: true,
+    setFilters({
+      Caribbean: true,
+      Greek: true,
+      French: true,
+      Indian: true,
+      Chinese: true,
+      calories: [MIN_VALUE_SLIDER, MAX_VALUE_SLIDER],
     })
   }
 
   useEffect(() => {
-    const isDefaultCheckboxes = Object.values(checkboxes).some(
+    const isDefaultCheckboxes = Object.values(filters).some(
       (box) => box == false,
     )
 
     const isDefaultSlider = [MIN_VALUE_SLIDER, MAX_VALUE_SLIDER].join(' ')
 
-    if (isDefaultCheckboxes || isDefaultSlider !== valueSlider.join(' ')) {
+    if (isDefaultCheckboxes || isDefaultSlider !== filters.calories.join(' ')) {
       setIsShownClearBtn(true)
     } else {
       setIsShownClearBtn(false)
     }
-  }, [checkboxes, valueSlider])
+  }, [filters])
 
   return (
     <Modal
@@ -123,10 +124,10 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
             labelPlacement='start'
             control={
               <Checkbox
-                checked={caribbean}
+                checked={Caribbean}
                 onChange={handleChangeCheckBoxes}
                 className={classes.checkBox}
-                name='caribbean'
+                name='Caribbean'
               />
             }
             label='Caribbean'
@@ -136,10 +137,10 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
             labelPlacement='start'
             control={
               <Checkbox
-                checked={greek}
+                checked={Greek}
                 onChange={handleChangeCheckBoxes}
                 className={classes.checkBox}
-                name='greek'
+                name='Greek'
               />
             }
             label='Greek'
@@ -149,10 +150,10 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
             labelPlacement='start'
             control={
               <Checkbox
-                checked={french}
+                checked={French}
                 onChange={handleChangeCheckBoxes}
                 className={classes.checkBox}
-                name='french'
+                name='French'
               />
             }
             label='French'
@@ -162,10 +163,10 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
             labelPlacement='start'
             control={
               <Checkbox
-                checked={indian}
+                checked={Indian}
                 onChange={handleChangeCheckBoxes}
                 className={classes.checkBox}
-                name='indian'
+                name='Indian'
               />
             }
             label='Indian'
@@ -175,10 +176,10 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
             labelPlacement='start'
             control={
               <Checkbox
-                checked={chinese}
+                checked={Chinese}
                 onChange={handleChangeCheckBoxes}
                 className={classes.checkBox}
-                name='chinese'
+                name='Chinese'
               />
             }
             label='Chinese'
@@ -187,7 +188,7 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
             <Slider
               className={classes.slider}
               getAriaLabel={() => 'Temperature range'}
-              value={valueSlider}
+              value={filters.calories}
               onChange={handleChangeSlider}
               valueLabelDisplay='on'
               getAriaValueText={valuetext}
@@ -210,7 +211,14 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
                 </Box>
               </Button>
             )}
-            <Button className={classes.submitBtn} variant='contained'>
+            <Button
+              className={classes.submitBtn}
+              onClick={() => {
+                dispatch(updateFilters(filters))
+                setModalIsOpened()
+              }}
+              variant='contained'
+            >
               SHOW RECIPES
             </Button>
           </Box>

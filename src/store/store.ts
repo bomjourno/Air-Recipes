@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import recipeReducer from './reducers/RecipeSlice'
+import filterReducer from './reducers/FilterSlice'
 
 const rootReducer = combineReducers({
   recipeReducer,
+  filterReducer,
 })
 
 export const setupStore = () => {
