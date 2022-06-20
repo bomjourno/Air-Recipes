@@ -8,9 +8,18 @@ export const theme = createTheme({
       fontSize: '64px',
       lineHeight: '80px',
     },
+    h5: {
+      fontFamily: 'Gilroy',
+      fontWeight: 800,
+      fontSize: '24px',
+      lineHeight: '28px',
+    },
     subtitle1: {
       lineHeight: '24px',
       color: '#82786a',
+    },
+    body1: {
+      lineHeight: '24px',
     },
   },
   palette: {

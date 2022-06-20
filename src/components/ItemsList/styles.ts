@@ -3,6 +3,11 @@ import { makeStyles } from '@mui/styles'
 
 export const useStyles = makeStyles({
   container: {
-    // padding: '3rem 1rem',
+    position: 'relative',
+    zIndex: '1',
+    padding: '32px 58px 96px 58px',
   },
+  // gridContainer: {
+  //   // justifyContent: 'space-between !important',
+  // },
 })

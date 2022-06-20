@@ -25,9 +25,8 @@ export const ItemsList = () => {
       className={classes.container}
       style={{ marginTop: marginTop as any }}
       component={motion.div}
-      disableGutters={true}
     >
-      <Grid container sx={{ flexDirection: 'column' }}>
+      <Grid container rowGap='24px' columnGap='20px'>
         {recipes.map((recipe) => (
           <Item item={recipe} key={recipe.id} />
         ))}

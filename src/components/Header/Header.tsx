@@ -17,27 +17,26 @@ export const Header = () => {
   const classes = useStyles()
 
   const offsetY = [0, 300]
+  const imageOffsetY = [-100, 250]
   const topSizes = [0, -160]
-  const heightSizes = [600, 352]
+  const heightHeaderSizes = [600, 352]
   const heightImageSizes = [735, 450]
   const { scrollY } = useViewportScroll()
   const top = useTransform(scrollY, offsetY, topSizes)
-  const height = useTransform(scrollY, offsetY, heightSizes)
-  const heightImage = useTransform(scrollY, offsetY, heightImageSizes)
+  const height = useTransform(scrollY, offsetY, heightHeaderSizes)
+  const heightImage = useTransform(scrollY, imageOffsetY, heightImageSizes)
 
   return (
     <Container
       className={classes.header}
       style={{ height: height as any }}
       component={motion.header}
-      disableGutters={true}
     >
       <Typography variant='h1'>Air Recipes</Typography>
       <Typography variant='subtitle1'>Best Recipes for Best People</Typography>
       <Container className={classes.searchbar} disableGutters={true}>
         <TextField
           className={classes.input}
-          id='outlined-basic'
           variant='outlined'
           placeholder='Search'
           value={value}

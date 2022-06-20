@@ -4,9 +4,10 @@ import Image from '../../images/header__image.png'
 export const useStyles = makeStyles({
   header: {
     position: 'sticky',
+    zIndex: 2,
     top: 0,
     width: '100%',
-    paddingTop: '128px',
+    padding: '128px 58px 0 58px',
     backgroundColor: '#fff',
     boxSizing: 'border-box',
   },
@@ -51,7 +52,7 @@ export const useStyles = makeStyles({
   },
   mainImage: {
     position: 'fixed',
-    zIndex: '-1',
+    zIndex: '-10',
     right: 0,
     width: '814px',
     backgroundImage: `url(${Image})`,
