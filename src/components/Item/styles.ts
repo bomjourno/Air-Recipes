@@ -11,6 +11,23 @@ export const useStyles = makeStyles({
       '0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.12), 0px 1px 3px rgba(0, 0, 0, 0.2) !important',
     borderRadius: '8px !important',
   },
+  cardImage: {
+    position: 'relative',
+  },
+  cardChips: {
+    position: 'absolute',
+    top: '150px',
+    right: 0,
+    paddingRight: '16px',
+  },
+  cardChipItem: {
+    marginLeft: '8px !important',
+    fontWeight: 400,
+    fontSize: '12px !important',
+    lineHeight: '16px !important',
+    // padding: '8px 12px !important',
+    backgroundColor: '#fff !important',
+  },
   cardActionArea: {
     height: '100%',
   },
