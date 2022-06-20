@@ -58,4 +58,22 @@ export const useStyles = makeStyles({
     backgroundImage: `url(${Image})`,
     backgroundRepeat: 'no-repeat',
   },
+  modal: {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+  },
+
+  boxModal: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '400px',
+    border: '2px solid #fff',
+    background: '#fff',
+    boxShadow: '24px',
+    padding: '4px',
+  },
+  blackDrop: {
+    backgroundColor: 'none',
+  },
 })

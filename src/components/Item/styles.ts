@@ -25,7 +25,6 @@ export const useStyles = makeStyles({
     fontWeight: 400,
     fontSize: '12px !important',
     lineHeight: '16px !important',
-    // padding: '8px 12px !important',
     backgroundColor: '#fff !important',
   },
   cardActionArea: {

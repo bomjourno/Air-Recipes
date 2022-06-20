@@ -7,13 +7,17 @@ import {
   InputAdornment,
   Paper,
   Box,
+  Modal,
 } from '@mui/material'
 import { motion, useTransform, useViewportScroll } from 'framer-motion'
 import { FilterList, Search, CancelRounded } from '@mui/icons-material'
 import { useStyles } from './styles'
+import { useToggle } from '../../hooks/useToggle'
+import { Popup } from '../Popup/Modal'
 
 export const Header = () => {
   const [value, setValue] = useState<string>('')
+  const [modalIsOpened, setModalIsOpened] = useToggle(false)
   const classes = useStyles()
 
   const offsetY = [0, 300]
@@ -61,6 +65,7 @@ export const Header = () => {
 
         <IconButton
           className={classes.filterIconWrap}
+          onClick={setModalIsOpened}
           size='large'
           color='primary'
           aria-label='filter_list'
@@ -72,6 +77,10 @@ export const Header = () => {
         className={classes.mainImage}
         style={{ top: top as any, height: heightImage as any }}
         component={motion.div}
+      />
+      <Popup
+        modalIsOpened={modalIsOpened}
+        setModalIsOpened={setModalIsOpened}
       />
     </Container>
   )
