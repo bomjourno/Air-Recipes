@@ -28,11 +28,12 @@ export const Header = () => {
 
   const classes = useStyles()
 
-  const offsetY = location.pathname === '/' ? [0, 300] : [300, 300]
+  const offsetY = location.pathname === '/Air-Recipes' ? [0, 300] : [300, 300]
   const imageOffsetY = [-100, 250]
   const topSizes = [0, -160]
   const heightHeaderSizes = [600, 352]
-  const heightImageSizes = location.pathname === '/' ? [735, 450] : [450, 450]
+  const heightImageSizes =
+    location.pathname === '/Air-Recipes' ? [735, 450] : [450, 450]
   const { scrollY } = useViewportScroll()
   const top = useTransform(scrollY, offsetY, topSizes)
   const height = useTransform(scrollY, offsetY, heightHeaderSizes)

@@ -2,8 +2,8 @@ import { makeStyles } from '@mui/styles'
 
 export const useStyles = makeStyles({
   container: {
-    display: 'flex',
-    justifyContent: 'center',
+    display: 'flex !important',
+    justifyContent: 'space-between',
     maxWidth: '1114px !important',
     marginTop: '48px',
     padding: '0 15px 0 15px !important',
@@ -55,7 +55,7 @@ export const useStyles = makeStyles({
   instructionsItemMark: {
     width: '16px',
     height: '16px',
-    margin: '2px 6px 0 0 ',
+    margin: '3px 6px 0 0 ',
     color: 'black',
     fontWeight: 700,
     fontSize: '9px',

@@ -12,8 +12,8 @@ function App() {
     <ThemeProvider theme={theme}>
       <Header />
       <Routes>
-        <Route path='/' element={<ItemsList />} />
-        <Route path='/:recipe' element={<DetailItem />} />
+        <Route path='/Air-Recipes' element={<ItemsList />} />
+        <Route path='/Air-Recipes/:recipe' element={<DetailItem />} />
       </Routes>
     </ThemeProvider>
   )

@@ -28,7 +28,7 @@ export const Item = ({ item }: ItemProps) => {
 
   return (
     <Link
-      to={`/${item.id}`}
+      to={`/Air-Recipes/${item.id}`}
       style={{ textDecoration: 'none' }}
       onClick={() => dispatch(fetchDetailRecipe(item.id))}
     >

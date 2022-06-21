@@ -1,0 +1,41 @@
+@import 'swiper/css';
+@import 'swiper/css/free-mode';
+@import 'swiper/css/navigation';
+@import 'swiper/css/thumbs';
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mySwiper img {
+  width: 56px;
+}
+
+.mySwiper {
+  margin-top: 16px;
+}
+
+.mySwiper .swiper-slide {
+  display: block;
+  width: 10% !important;
+  height: 56px;
+  margin-right: 8px !important;
+}
