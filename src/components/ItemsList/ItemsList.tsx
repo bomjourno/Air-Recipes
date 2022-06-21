@@ -1,28 +1,18 @@
 import React, { useEffect } from 'react'
-import { Container, Grid } from '@mui/material'
+import { Box, CircularProgress, Container, Grid } from '@mui/material'
 import { useStyles } from './styles'
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch'
 import { fetchRecipes } from '../../store/reducers/ActionCreators'
 import { Item } from '../Item/Item'
 import { motion, useTransform, useViewportScroll } from 'framer-motion'
-import { IFilters } from '../../types/filters'
-import { IRecipeItem } from '../../types/recipes'
 
-// interface ISupportFilter {
-//   [key: string]: string
-// }
-
-interface ISupportFilter {
-  [key: string]: boolean | number[]
+interface ISupportFilterFlags {
+  [key: string]: boolean
 }
 
-// const filtersMock: ISupportFilterMock = {
-//   [CARIBBEAN]: true,
-//   Greek: true,
-//   French: true,
-//   Indian: true,
-//   Chinese: false,
-// }
+interface ISupportFilterCal {
+  calories: number[]
+}
 
 export const ItemsList = () => {
   const classes = useStyles()
@@ -34,24 +24,29 @@ export const ItemsList = () => {
   const dispatch = useAppDispatch()
   const filters = useAppSelector((state) => state.filterReducer)
   const { recipes } = useAppSelector((state) => state.recipeReducer.recipes)
+  const { isLoading, error } = useAppSelector((state) => state.recipeReducer)
   const { Caribbean, Greek, French, Indian, Chinese, calories } = filters
 
-  const supportFilter: ISupportFilter = {
+  const supportFilterFlags: ISupportFilterFlags = {
     Caribbean,
     Greek,
     French,
     Indian,
     Chinese,
+  }
+
+  const supportFilterCal: ISupportFilterCal = {
     calories,
   }
 
-  console.log(filters)
-
-  const filterRecipes = recipes.filter(
-    (item) => supportFilter[item.cuisine.title],
-  )
-
-  console.log(filterRecipes)
+  const filteredRecipes = recipes.filter((item) => {
+    if (
+      supportFilterCal.calories[0] <= item.caloricity &&
+      item.caloricity <= supportFilterCal.calories[1]
+    ) {
+      return item && supportFilterFlags[item.cuisine.title]
+    }
+  })
 
   useEffect(() => {
     dispatch(fetchRecipes())
@@ -63,77 +58,19 @@ export const ItemsList = () => {
       style={{ marginTop: marginTop as any }}
       component={motion.div}
     >
-      <Grid container rowGap='24px' columnGap='20px'>
-        {filterRecipes.map((recipe) => (
-          <Item item={recipe} key={recipe.id} />
-        ))}
-      </Grid>
+      <>
+        {isLoading && (
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <CircularProgress sx={{ color: 'red' }} />
+          </Box>
+        )}
+        <Grid container rowGap='24px' columnGap='20px'>
+          {filteredRecipes.map((recipe) => (
+            <Item item={recipe} key={recipe.id} />
+          ))}
+        </Grid>
+        {error && alert(error)}
+      </>
     </Container>
   )
 }
-
-// import React, { useEffect } from 'react'
-// import { Container, Grid } from '@mui/material'
-// import { useStyles } from './styles'
-// import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch'
-// import { fetchRecipes } from '../../store/reducers/ActionCreators'
-// import { Item } from '../Item/Item'
-// import { motion, useTransform, useViewportScroll } from 'framer-motion'
-// import { IFilters } from '../../types/filters'
-// import { IRecipeItem } from '../../types/recipes'
-
-// interface ISupportFilter {
-//   [key: string]: string
-// }
-
-// interface ISupportFilterMock {
-//   [key: string]: boolean
-// }
-
-// const CARIBBIAN = 'Caribbean'
-
-// const filtersMock: ISupportFilterMock = {
-//   [CARIBBIAN]: true,
-//   Greek: true,
-//   French: true,
-//   Indian: true,
-//   Chinese: false,
-// }
-
-// export const ItemsList = () => {
-//   const classes = useStyles()
-
-//   const offsetY = [0, 300]
-//   const { scrollY } = useViewportScroll()
-//   const marginTop = useTransform(scrollY, offsetY, offsetY)
-
-//   const dispatch = useAppDispatch()
-//   const filters = useAppSelector((state) => state.filterReducer)
-//   const { recipes } = useAppSelector((state) => state.recipeReducer.recipes)
-//   const { Caribbean, Greek, French, Indian, Chinese, calories } = filters
-
-//   // console.log(filtersMock[supportFilter['Caribbean']])
-//   // console.log(recipes)
-
-//   console.log(
-//     recipes.filter((item: IRecipeItem) => filtersMock[item.cuisine.title]),
-//   )
-
-//   useEffect(() => {
-//     dispatch(fetchRecipes())
-//   }, [])
-
-//   return (
-//     <Container
-//       className={classes.container}
-//       style={{ marginTop: marginTop as any }}
-//       component={motion.div}
-//     >
-//       <Grid container rowGap='24px' columnGap='20px'>
-//         {recipes.map((recipe) => (
-//           <Item item={recipe} key={recipe.id} />
-//         ))}
-//       </Grid>
-//     </Container>
-//   )
-// }
