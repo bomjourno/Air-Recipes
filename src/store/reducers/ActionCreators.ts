@@ -18,7 +18,6 @@ export const fetchDetailRecipe =
     try {
       dispatch(detailRecipeSlice.actions.detailRecipeFetching())
       const response = await api.getItem(id)
-      console.log(response)
       dispatch(
         detailRecipeSlice.actions.detailRecipeFetchingSuccess(response.data),
       )
