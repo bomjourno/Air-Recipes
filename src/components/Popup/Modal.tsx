@@ -15,6 +15,7 @@ import { Close } from '@mui/icons-material'
 import { motion } from 'framer-motion'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { filterSlice } from '../../store/reducers/FilterSlice'
+import { MAX_VALUE_SLIDER, MIN_VALUE_SLIDER } from '../../utils/constants'
 
 interface PopupProps {
   modalIsOpened: boolean
@@ -29,9 +30,6 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
   const dispatch = useAppDispatch()
   const { updateFilters } = filterSlice.actions
   const [isShownClearBtn, setIsShownClearBtn] = useState<boolean>(false)
-
-  const MAX_VALUE_SLIDER = 1200
-  const MIN_VALUE_SLIDER = 100
 
   const [localFilters, setLocalFilters] = useState({
     Caribbean: true,

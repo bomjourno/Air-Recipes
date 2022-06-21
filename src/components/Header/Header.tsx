@@ -16,6 +16,7 @@ import { useToggle } from '../../hooks/useToggle'
 import { Popup } from '../Popup/Modal'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { searchSlice } from '../../store/reducers/SearchSlice'
+import { useLocation } from 'react-router-dom'
 
 export const Header = () => {
   const dispatch = useAppDispatch()
@@ -23,13 +24,15 @@ export const Header = () => {
   const [value, setValue] = useState<string>('')
   const [modalIsOpened, setModalIsOpened] = useToggle(false)
 
+  const location = useLocation()
+
   const classes = useStyles()
 
-  const offsetY = [0, 300]
+  const offsetY = location.pathname === '/' ? [0, 300] : [300, 300]
   const imageOffsetY = [-100, 250]
   const topSizes = [0, -160]
   const heightHeaderSizes = [600, 352]
-  const heightImageSizes = [735, 450]
+  const heightImageSizes = location.pathname === '/' ? [735, 450] : [450, 450]
   const { scrollY } = useViewportScroll()
   const top = useTransform(scrollY, offsetY, topSizes)
   const height = useTransform(scrollY, offsetY, heightHeaderSizes)

@@ -8,6 +8,12 @@ export const theme = createTheme({
       fontSize: '64px',
       lineHeight: '80px',
     },
+    h2: {
+      fontFamily: 'Gilroy',
+      fontWeight: 800,
+      fontSize: '40px',
+      lineHeight: '48px',
+    },
     h5: {
       fontFamily: 'Gilroy',
       fontWeight: 800,
