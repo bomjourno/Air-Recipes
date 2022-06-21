@@ -14,10 +14,15 @@ import { FilterList, Search, CancelRounded } from '@mui/icons-material'
 import { useStyles } from './styles'
 import { useToggle } from '../../hooks/useToggle'
 import { Popup } from '../Popup/Modal'
+import { useAppDispatch } from '../../hooks/useAppDispatch'
+import { searchSlice } from '../../store/reducers/SearchSlice'
 
 export const Header = () => {
+  const dispatch = useAppDispatch()
+  const { searchRecipe } = searchSlice.actions
   const [value, setValue] = useState<string>('')
   const [modalIsOpened, setModalIsOpened] = useToggle(false)
+
   const classes = useStyles()
 
   const offsetY = [0, 300]
@@ -30,6 +35,11 @@ export const Header = () => {
   const height = useTransform(scrollY, offsetY, heightHeaderSizes)
   const heightImage = useTransform(scrollY, imageOffsetY, heightImageSizes)
 
+  const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    dispatch(searchRecipe(value))
+  }
+
   return (
     <Container
       className={classes.header}
@@ -39,39 +49,40 @@ export const Header = () => {
       <Typography variant='h1'>Air Recipes</Typography>
       <Typography variant='subtitle1'>Best Recipes for Best People</Typography>
       <Container className={classes.searchbar} disableGutters={true}>
-        <TextField
-          className={classes.input}
-          variant='outlined'
-          placeholder='Search'
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          type='text'
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position='start'>
-                <Search color='secondary' />
-              </InputAdornment>
-            ),
-            endAdornment: value && (
-              <IconButton onClick={() => setValue('')}>
-                <CancelRounded
-                  className={classes.cancelIcon}
-                  color='secondary'
-                />
-              </IconButton>
-            ),
-          }}
-        />
-
-        <IconButton
-          className={classes.filterIconWrap}
-          onClick={setModalIsOpened}
-          size='large'
-          color='primary'
-          aria-label='filter_list'
-        >
-          <FilterList className={classes.filterIcon} />
-        </IconButton>
+        <Box component='form' onSubmit={handleSubmit}>
+          <TextField
+            className={classes.input}
+            variant='outlined'
+            placeholder='Search'
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            type='text'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <Search color='secondary' />
+                </InputAdornment>
+              ),
+              endAdornment: value && (
+                <IconButton onClick={() => setValue('')}>
+                  <CancelRounded
+                    className={classes.cancelIcon}
+                    color='secondary'
+                  />
+                </IconButton>
+              ),
+            }}
+          />
+          <IconButton
+            className={classes.filterIconWrap}
+            onClick={setModalIsOpened}
+            size='large'
+            color='primary'
+            aria-label='filter_list'
+          >
+            <FilterList className={classes.filterIcon} />
+          </IconButton>
+        </Box>
       </Container>
       <Box
         className={classes.mainImage}

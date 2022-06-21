@@ -33,7 +33,7 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
   const MAX_VALUE_SLIDER = 1200
   const MIN_VALUE_SLIDER = 100
 
-  const [filters, setFilters] = useState({
+  const [localFilters, setLocalFilters] = useState({
     Caribbean: true,
     Greek: true,
     French: true,
@@ -42,7 +42,7 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
     calories: [MIN_VALUE_SLIDER, MAX_VALUE_SLIDER],
   })
 
-  const { Caribbean, Greek, French, Indian, Chinese } = filters
+  const { Caribbean, Greek, French, Indian, Chinese } = localFilters
 
   const valuetext = (value: number) => {
     return `${value}`
@@ -51,18 +51,18 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
   const handleChangeCheckBoxes = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setFilters({
-      ...filters,
+    setLocalFilters({
+      ...localFilters,
       [event.target.name]: event.target.checked,
     })
   }
 
   const handleChangeSlider = (event: Event, newValue: number | number[]) => {
-    setFilters({ ...filters, calories: newValue as number[] })
+    setLocalFilters({ ...localFilters, calories: newValue as number[] })
   }
 
   const handleDefaultFilter = () => {
-    setFilters({
+    setLocalFilters({
       Caribbean: true,
       Greek: true,
       French: true,
@@ -73,18 +73,21 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
   }
 
   useEffect(() => {
-    const isDefaultCheckboxes = Object.values(filters).some(
+    const isDefaultCheckboxes = Object.values(localFilters).some(
       (box) => box == false,
     )
 
     const isDefaultSlider = [MIN_VALUE_SLIDER, MAX_VALUE_SLIDER].join(' ')
 
-    if (isDefaultCheckboxes || isDefaultSlider !== filters.calories.join(' ')) {
+    if (
+      isDefaultCheckboxes ||
+      isDefaultSlider !== localFilters.calories.join(' ')
+    ) {
       setIsShownClearBtn(true)
     } else {
       setIsShownClearBtn(false)
     }
-  }, [filters])
+  }, [localFilters])
 
   return (
     <Modal
@@ -188,7 +191,7 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
             <Slider
               className={classes.slider}
               getAriaLabel={() => 'Temperature range'}
-              value={filters.calories}
+              value={localFilters.calories}
               onChange={handleChangeSlider}
               valueLabelDisplay='on'
               getAriaValueText={valuetext}
@@ -214,7 +217,7 @@ export const Popup = ({ modalIsOpened, setModalIsOpened }: PopupProps) => {
             <Button
               className={classes.submitBtn}
               onClick={() => {
-                dispatch(updateFilters(filters))
+                dispatch(updateFilters(localFilters))
                 setModalIsOpened()
               }}
               variant='contained'

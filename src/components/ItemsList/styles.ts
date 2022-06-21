@@ -5,9 +5,12 @@ export const useStyles = makeStyles({
   container: {
     position: 'relative',
     zIndex: '1',
-    padding: '32px 58px 96px 58px',
+    maxWidth: '1114px !important',
+    justifyContent: 'center',
+    margin: '0 auto',
+    padding: '32px 15px 96px 15px !important',
   },
-  // gridContainer: {
-  //   // justifyContent: 'space-between !important',
-  // },
+  gridContainer: {
+    justifyContent: 'start !important',
+  },
 })

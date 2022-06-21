@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import recipeReducer from './reducers/RecipeSlice'
 import filterReducer from './reducers/FilterSlice'
+import searchReducer from './reducers/SearchSlice'
 
 const rootReducer = combineReducers({
   recipeReducer,
   filterReducer,
+  searchReducer,
 })
 
 export const setupStore = () => {

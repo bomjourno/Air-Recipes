@@ -25,6 +25,7 @@ export const ItemsList = () => {
   const filters = useAppSelector((state) => state.filterReducer)
   const { recipes } = useAppSelector((state) => state.recipeReducer.recipes)
   const { isLoading, error } = useAppSelector((state) => state.recipeReducer)
+  const searchRecipe = useAppSelector((state) => state.searchReducer)
   const { Caribbean, Greek, French, Indian, Chinese, calories } = filters
 
   const supportFilterFlags: ISupportFilterFlags = {
@@ -42,7 +43,8 @@ export const ItemsList = () => {
   const filteredRecipes = recipes.filter((item) => {
     if (
       supportFilterCal.calories[0] <= item.caloricity &&
-      item.caloricity <= supportFilterCal.calories[1]
+      item.caloricity <= supportFilterCal.calories[1] &&
+      item.title.toLowerCase().includes(searchRecipe.toLowerCase())
     ) {
       return item && supportFilterFlags[item.cuisine.title]
     }
@@ -64,7 +66,12 @@ export const ItemsList = () => {
             <CircularProgress sx={{ color: 'red' }} />
           </Box>
         )}
-        <Grid container rowGap='24px' columnGap='20px'>
+        <Grid
+          className={classes.gridContainer}
+          container
+          columnGap='20px'
+          rowGap='24px'
+        >
           {filteredRecipes.map((recipe) => (
             <Item item={recipe} key={recipe.id} />
           ))}
