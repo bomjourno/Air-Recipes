@@ -13,8 +13,7 @@ import {
   FiberManualRecord,
   QuestionMark,
 } from '@mui/icons-material'
-
-import { useAppSelector } from '../../hooks/useAppDispatch'
+import { FreeMode, Navigation, Thumbs } from 'swiper'
 
 import easyIcon from '../../images/easy__icon.svg'
 import mediumIcon from '../../images/medium__icon.svg'
@@ -23,7 +22,7 @@ import caloryIcon from '../../images/calories__icon.svg'
 import cuisineIcon from '../../images/cuisine__icon.svg'
 
 import { getCookTime } from '../../utils/constants'
-import { FreeMode, Navigation, Thumbs } from 'swiper'
+import { useAppSelector } from '../../hooks/useAppDispatch'
 
 import { useStyles } from './styles'
 import './swiperStyles.css'
@@ -52,7 +51,7 @@ export const DetailItem = () => {
     <Container className={classes.container}>
       <>
         {isLoading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Box sx={{ position: 'absolute', left: '50%' }}>
             <CircularProgress sx={{ color: 'red' }} />
           </Box>
         ) : (

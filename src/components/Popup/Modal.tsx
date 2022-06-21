@@ -10,12 +10,14 @@ import {
   Slider,
   Typography,
 } from '@mui/material'
-import { useStyles } from './styles'
 import { Close } from '@mui/icons-material'
 import { motion } from 'framer-motion'
-import { useAppDispatch } from '../../hooks/useAppDispatch'
+
 import { filterSlice } from '../../store/reducers/FilterSlice'
 import { MAX_VALUE_SLIDER, MIN_VALUE_SLIDER } from '../../utils/constants'
+
+import { useStyles } from './styles'
+import { useAppDispatch } from '../../hooks/useAppDispatch'
 
 interface PopupProps {
   modalIsOpened: boolean

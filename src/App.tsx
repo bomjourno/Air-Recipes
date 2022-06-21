@@ -1,11 +1,12 @@
 import React from 'react'
-import { Header } from './components/Header/Header'
-import { ThemeProvider } from '@mui/material/styles'
-import { theme } from './utils/theme'
-import { ItemsList } from './components/ItemsList/ItemsList'
 import { Route, Routes } from 'react-router-dom'
-import { fetchDetailRecipe } from './store/reducers/ActionCreators'
+import { ThemeProvider } from '@mui/material/styles'
+
+import { Header } from './components/Header/Header'
+import { ItemsList } from './components/ItemsList/ItemsList'
 import { DetailItem } from './components/DetailItem/DetailItem'
+
+import { theme } from './utils/theme'
 
 function App() {
   return (

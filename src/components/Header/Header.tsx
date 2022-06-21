@@ -5,27 +5,26 @@ import {
   Container,
   IconButton,
   InputAdornment,
-  Paper,
   Box,
-  Modal,
 } from '@mui/material'
 import { motion, useTransform, useViewportScroll } from 'framer-motion'
 import { FilterList, Search, CancelRounded } from '@mui/icons-material'
+import { useLocation } from 'react-router-dom'
+
+import { Popup } from '../Popup/Modal'
+
 import { useStyles } from './styles'
 import { useToggle } from '../../hooks/useToggle'
-import { Popup } from '../Popup/Modal'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { searchSlice } from '../../store/reducers/SearchSlice'
-import { useLocation } from 'react-router-dom'
 
 export const Header = () => {
   const dispatch = useAppDispatch()
   const { searchRecipe } = searchSlice.actions
+
   const [value, setValue] = useState<string>('')
   const [modalIsOpened, setModalIsOpened] = useToggle(false)
-
   const location = useLocation()
-
   const classes = useStyles()
 
   const offsetY = location.pathname === '/Air-Recipes' ? [0, 300] : [300, 300]

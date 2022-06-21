@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import { Box, CircularProgress, Container, Grid } from '@mui/material'
-import { useStyles } from './styles'
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch'
-import { fetchRecipes } from '../../store/reducers/ActionCreators'
-import { Item } from '../Item/Item'
 import { motion, useTransform, useViewportScroll } from 'framer-motion'
+
+import { Item } from '../Item/Item'
+
+import { useStyles } from './styles'
+import { fetchRecipes } from '../../store/reducers/ActionCreators'
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch'
 
 interface ISupportFilterFlags {
   [key: string]: boolean

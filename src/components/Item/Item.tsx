@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Box,
   Card,
   CardActionArea,
   CardContent,
@@ -10,12 +9,14 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import { IRecipeItem } from '../../types/recipes'
-import { useStyles } from './styles'
 import { Link } from 'react-router-dom'
+
+import { getCookTime } from '../../utils/constants'
+
+import { useStyles } from './styles'
+import { IRecipeItem } from '../../types/recipes'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { fetchDetailRecipe } from '../../store/reducers/ActionCreators'
-import { getCookTime } from '../../utils/constants'
 
 interface ItemProps {
   item: IRecipeItem
